@@ -4,8 +4,21 @@
       <!-- header -->
       <h1 class="primary--text display-3 font-weight-medium my-3">Products</h1>
       <!-- main -->
-      products
-      {{ products }}
+      <!-- {{ products }} -->
+      <table>
+        <tr>
+          <th>title</th>
+          <th>description</th>
+          <th>price</th>
+          <th>seller</th>
+        </tr>
+        <tr v-for="product in products">
+          <td>{{ product.title }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.seller && product.seller.name }}</td>
+        </tr>
+      </table>
       <!-- footer -->
       <footer-info></footer-info>
     </v-flex>

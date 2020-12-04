@@ -4,10 +4,25 @@
       <!-- header -->
       <h1 class="primary--text display-3 font-weight-medium my-3">Sellers</h1>
       <!-- main -->
-      sellers
-      {{ sellers }}
+      <!-- {{ sellers }} -->
+      <table>
+        <tr>
+          <th>name</th>
+          <th>phone</th>
+          <th>products</th>
+        </tr>
+        <tr v-for="seller in sellers">
+          <td>{{ seller.name }}</td>
+          <td>{{ seller.phone }}</td>
+          <td>{{ seller.products
+             && seller.products
+              .map((el) => (el.title))
+              .join(', ')
+            }}</td>
+        </tr>
+      </table>
       <!-- footer -->
-      <footer-info></footer-info>
+      <!-- <footer-info></footer-info> -->
     </v-flex>
   </v-layout>
 </template>

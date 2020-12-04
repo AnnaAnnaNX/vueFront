@@ -4,9 +4,15 @@
       <!-- header -->
       <h1 class="primary--text display-3 font-weight-medium my-3">Seller</h1>
       <!-- main -->
-      id from router {{id}}
-      seller
-      {{ seller }}
+      <!-- id from router {{id}} -->
+      <!-- {{ seller }} -->
+      <div>name: {{ seller.name }}</div>
+      <div>phone: {{ seller.phone }}</div>
+      <div>products: {{ seller.products
+          && seller.products
+          .map((el) => (el.title))
+          .join(', ')
+        }}</div>
       <!-- footer -->
       <footer-info></footer-info>
     </v-flex>

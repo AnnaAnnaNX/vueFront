@@ -4,11 +4,14 @@
       <!-- header -->
       <h1 class="primary--text display-3 font-weight-medium my-3">Products</h1>
       <!-- main -->
-      id from router {{id}}
-      product
-      {{ product }}
+      <!-- id from router {{id}} -->
+      <!-- {{ product }} -->
+      <div>title: {{ product.title }}</div>
+      <div>description: {{ product.description }}</div>
+      <div>price: {{ product.price }}</div>
+      <div>name: {{ product.seller && product.seller.name }}</div>
       <!-- footer -->
-      <footer-info></footer-info>
+      <!-- <footer-info></footer-info> -->
     </v-flex>
   </v-layout>
 </template>
