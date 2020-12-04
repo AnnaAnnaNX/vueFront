@@ -3,11 +3,47 @@ import Vuex from 'vuex'
 import { apolloClient } from '@/apollo'
 import gql from 'graphql-tag'
 
-const todoQuery = gql`{
-    todos(order_by: [{id: desc}]) {
+const productsQuery = gql`{
+  products(order_by: [{id: desc}]) {
       id
-      text
-      is_completed
+      title
+      is_sold
+      seller {
+        name 
+      }
+    }
+}`
+
+const productQuery = gql`query($id: Int!) {
+  products(where: { id: { _eq: $id} }){
+      id
+      title
+      is_sold
+      seller {
+        name 
+      }
+    }
+}`
+
+const sellersQuery = gql`{
+  sellers(order_by: [{id: desc}]) {
+      id
+      name
+      phone
+      products {
+        title
+      }
+    }
+}`
+
+const sellerQuery = gql`query($id: String!) {
+  sellers(where: { id: { _eq: $id} }){
+      id
+      name
+      phone
+      products {
+        title
+      }
     }
 }`
 
@@ -62,12 +98,25 @@ Vue.use(Vuex)
 
 const state = {
   // todos: JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '[]')
+  products: undefined,
+  product: undefined,
+  sellers: undefined,
+  seller: undefined,
   todos: []
 }
 
 const mutations = {
-  fetchTodos (state, todos) {
-    state.todos = todos
+  fetchProducts (state, products) {
+    state.products = products
+  },
+  fetchProduct (state, product) {
+    state.product = product
+  },
+  fetchSellers (state, sellers) {
+    state.sellers = sellers
+  },
+  fetchSeller (state, seller) {
+    state.seller = seller
   },
   addTodo (state, todo) {
     state.todos.unshift(todo)
@@ -89,9 +138,21 @@ const actions = {
       commit('addTodo', data.insert_todos.returning[0])
     }
   },
-  async fetchTodos ({ commit }) {
-    const { data } = await apolloClient.query({query: todoQuery})
-    commit('fetchTodos', data.todos)
+  async fetchProducts ({ commit }) {
+    const { data } = await apolloClient.query({query: productsQuery})
+    commit('fetchProducts', data.products)
+  },
+  async getProduct ({ commit }, id) {
+    const { data } = await apolloClient.query({query: productQuery, variables: {id: id.toString()}})
+    commit('fetchProduct', data.products && data.products[0])
+  },
+  async fetchSellers ({ commit }) {
+    const { data } = await apolloClient.query({query: sellersQuery})
+    commit('fetchSellers', data.sellers)
+  },
+  async getSeller ({ commit }, id) {
+    const { data } = await apolloClient.query({query: sellerQuery, variables: {id: id}})
+    commit('fetchSeller', data.sellers && data.sellers[0])
   },
   async removeTodo ({ commit }, todo) {
     const { data } = await apolloClient.mutate({mutation: todoDeleteMutation, variables: {todoId: todo.id}})

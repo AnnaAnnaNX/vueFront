@@ -134,7 +134,7 @@ export default {
   },
   beforeCreate () {
     // `1` is the ID of the book we want to fetch.
-    this.$store.dispatch('fetchTodos')
+    this.$store.dispatch('fetchProducts')
   },
   methods: {
     ...mapActions([
