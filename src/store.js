@@ -131,12 +131,6 @@ const mutations = {
 }
 
 const actions = {
-  async addTodo ({ commit }, text) {
-    const { data } = await apolloClient.mutate({mutation: todoMutation, variables: {text: text}})
-    if (data.insert_todos.affected_rows) {
-      commit('addTodo', data.insert_todos.returning[0])
-    }
-  },
   async fetchProducts ({ commit }) {
     const { data } = await apolloClient.query({query: productsQuery})
     commit('fetchProducts', data.products)
