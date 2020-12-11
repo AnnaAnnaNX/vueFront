@@ -133,7 +133,6 @@ const mutations = {
 const actions = {
   async addTodo ({ commit }, text) {
     const { data } = await apolloClient.mutate({mutation: todoMutation, variables: {text: text}})
-    console.log(data)
     if (data.insert_todos.affected_rows) {
       commit('addTodo', data.insert_todos.returning[0])
     }
